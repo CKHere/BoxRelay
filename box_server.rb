@@ -118,20 +118,20 @@ while (initSession = server.accept)
         # Transfer messages
         ready[0].each do |c|
           if !(c.eof)
-            if c == railsSession 
-              data = c.gets
-              puts "log: Attempting to transfer rails message: " + data
-              if !boxSession.closed?
-                boxSession.puts data
-                puts "log: Rails message transferred"
-              end
-            end
             if c == boxSession
               data = boxSession.gets
               puts "log: Attempting to transfer box message: " + data
               if !railsSession.closed?
                 railsSession.puts data
                 puts "log: Box message transferred"
+              end
+            end
+            if c == railsSession 
+              data = c.gets
+              puts "log: Attempting to transfer rails message: " + data
+              if !boxSession.closed?
+                boxSession.puts data
+                puts "log: Rails message transferred"
               end
             end
           end
